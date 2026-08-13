@@ -48,13 +48,13 @@ const descriptions={
 };
 const beansStd=['Signature','Brazil','Ethiopia'];
 const extras=['Vanilla syrup +5','Caramel syrup +5','Date syrup +8','Cereal-flavored milk +8','Vanilla foam +5','Strawberry foam +5','Salted vanilla foam +8'];
-let cat='Coffee', current={}, customer='', basket=[];
+let cat='Coffee', current={}, customer='', phone='', basket=[];
 const app=document.getElementById('app'), tabsEl=document.getElementById('tabs');
 function showTabs(on=true){tabsEl.style.display=on?'flex':'none'}
 function tabs(){tabsEl.innerHTML=Object.keys(menu).map(c=>`<button class="tab ${c==cat?'on':''}" onclick="cat='${c}';tabs();home()">${c}</button>`).join('')}
 function startScreen(){showTabs(false);basket=[];customer='';app.innerHTML=`<div class="start"><div class="startbox"><button class="startbtn" onclick="nameScreen()">START NEW ORDER</button></div></div>`}
-function nameScreen(){showTabs(false);app.innerHTML=`<div class="start"><div class="startbox"><h2>Who's this order for?</h2><input id="orderName" class="name" placeholder="Name" autofocus><button class="startbtn" style="margin-top:12px" onclick="beginOrder()">CONTINUE</button></div></div>`}
-function beginOrder(){customer=(document.getElementById('orderName').value||'Guest').trim();showTabs(true);tabs();home()}
+function nameScreen(){showTabs(false);app.innerHTML='<div class="start"><div class="startbox"><h2>Who is this order for?</h2><input id="orderName" class="input" placeholder="Name"><input id="orderPhone" class="input" type="tel" placeholder="Phone number"><button class="startbtn" onclick="beginOrder()">START ORDER</button></div></div>'}
+function beginOrder(){customer=(document.getElementById('orderName').value||'').trim();phone=(document.getElementById('orderPhone').value||'').trim();if(!customer){alert('Please enter your name.');return}if(!phone){alert('Please enter your phone number.');return}localStorage.setItem('a22name',customer);home()}
 function home(){current={};showTabs(true);app.innerHTML=`<div class="grid">${menu[cat].map(x=>`<button class="card" onclick='openItem(${JSON.stringify(x[0])})'>${x[0]}<small>${x[1]}</small></button>`).join('')}</div>${basket.length?`<div class="cartbar"><button class="viewbtn" onclick="viewBasket()">BASKET · ${basket.length}</button></div>`:''}`}
 function opts(title,arr,multi=false){return `<h3>${title}</h3>${arr.map(v=>`<button class="choice" data-group="${title}" data-multi="${multi}" onclick="pick(this,'${v.replaceAll("'","\\'")}')">${v}</button>`).join('')}`}
 function openItem(item){current={item,choices:[],cat};let s=`<button class="back" onclick="home()">← Back</button><div class="panel"><h2>${item}</h2><p class="desc">${descriptions[item]||''}</p>`;
@@ -86,7 +86,15 @@ let n=String(Number(localStorage.a22n||0)+1).padStart(4,'0');
 let time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
 let total=basket.length;
 let orderItems=JSON.parse(JSON.stringify(basket));
-let payload={customer_name:customer,order_number:n,items:orderItems,category_number:carCategory?Number(carCategory):null,car_number:carNumber||null,status:'new'};
+let payload={
+  customer_name:customer,
+  phone:phone,
+  order_number:n,
+  items:orderItems,
+  category_number:carCategory?Number(carCategory):null,
+  car_number:carNumber,
+  status:"new"
+};
 let placeBtn=document.querySelector('.place');if(placeBtn){placeBtn.disabled=true;placeBtn.textContent='PLACING ORDER…'}
 try{
 let res=await fetch(`${SUPABASE_URL}/rest/v1/orders`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});
