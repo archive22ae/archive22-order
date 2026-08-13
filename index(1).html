@@ -1,0 +1,103 @@
+<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'><meta name='apple-mobile-web-app-capable' content='yes'>
+<meta name='apple-mobile-web-app-status-bar-style' content='default'>
+<meta name='apple-mobile-web-app-title' content='Archive 22'>
+<meta name='theme-color' content='#fffaf4'>
+<meta name='mobile-web-app-capable' content='yes'>
+<link rel='apple-touch-icon' href='apple-touch-icon.png'>
+<link rel='icon' type='image/png' sizes='192x192' href='icon-192.png'>
+<link rel='manifest' href='manifest.webmanifest'>
+<title>Archive 22</title><style>
+:root{--wine:#9c1746;--cream:#fffaf4;--ink:#251d1c;--line:#eadfd6}*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:var(--cream);color:var(--ink)}header{text-align:center;padding:22px 16px 10px}header img{width:min(390px,80vw);height:120px;object-fit:cover;border-radius:24px}header p{margin:8px 0;color:#806f69}.tabs{display:flex;gap:8px;overflow:auto;padding:10px 16px;position:sticky;top:0;background:#fffaf4eF;backdrop-filter:blur(10px);z-index:2}.tab{border:1px solid var(--line);background:white;border-radius:999px;padding:14px 20px;white-space:nowrap;font-weight:700;font-size:18px}.tab.on{background:var(--wine);color:white;border-color:var(--wine)}main{max-width:850px;margin:auto;padding:12px 16px 110px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;text-align:left;font-size:18px;min-height:82px}.card small{display:block;color:#8c7770;margin-top:6px;font-size:13px}.desc{color:#806f69;font-size:14px;line-height:1.45;margin:4px 0 18px}.tag .message{text-align:center;font-size:10px;line-height:1.35;margin-top:3px;font-weight:600}.panel{background:white;border:1px solid var(--line);border-radius:22px;padding:20px}.back{border:0;background:none;font-size:16px;padding:0 0 18px}.choice{display:block;width:100%;padding:14px;margin:8px 0;border:1px solid var(--line);border-radius:14px;background:#fff;text-align:left;font-size:16px}.choice.sel{border-color:var(--wine);box-shadow:0 0 0 1px var(--wine)}h2{margin:0 0 12px}h3{margin:22px 0 8px}.name,input,textarea{width:100%;font-size:17px;padding:14px;border:1px solid var(--line);border-radius:14px;background:white}.place{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:min(820px,calc(100% - 32px));border:0;border-radius:18px;padding:17px;background:var(--wine);color:white;font-weight:750;font-size:18px}.tag{width:50mm;height:50mm;background:white;color:#111;border:1px solid #bbb;border-radius:4mm;padding:4mm;margin:20px auto;font-family:Arial,sans-serif;display:flex;flex-direction:column}.tag .top,.tag .bottom{display:flex;justify-content:space-between;font-size:9px}.tag .person{text-align:center;font-weight:800;font-size:20px;margin:8px 0 4px}.tag .item{text-align:center;font-weight:800;font-size:13px;margin-top:10px}.tag .details{text-align:center;font-size:10px;line-height:1.35}.tag .bottom{margin-top:auto}.actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.basket{margin-top:18px}.basket-item{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.basket-item:last-child{border-bottom:0}.basket-item small{display:block;color:#806f69;margin-top:4px}.start{min-height:62vh;display:flex;align-items:center;justify-content:center}.startbox{width:min(520px,100%);text-align:center}.startbtn{width:100%;border:0;border-radius:20px;padding:19px;background:var(--wine);color:white;font-size:20px;font-weight:800}.cartbar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);width:min(820px,calc(100% - 32px));display:flex;gap:10px;z-index:3}.cartbar button{border:0;border-radius:18px;padding:16px;font-weight:750;font-size:17px}.addbtn{flex:1;background:var(--wine);color:white}.viewbtn{background:#fff;border:1px solid var(--line)!important;color:var(--ink)}.actions button{padding:12px 18px;border-radius:14px;border:1px solid var(--line);background:white}.note{font-size:13px;color:#7c6a64;text-align:center;max-width:550px;margin:16px auto}@media(max-width:560px){.grid{grid-template-columns:1fr}header img{height:100px}}@media print{@page{size:50mm 50mm;margin:0}html,body{background:#fff;margin:0;padding:0}header,.tabs,.actions,.note,.panel>h2{display:none!important}main{padding:0!important;margin:0!important;max-width:none!important}.panel{border:0!important;padding:0!important;background:#fff!important}.tag{width:50mm!important;height:50mm!important;margin:0!important;border:0!important;border-radius:0!important;page-break-after:always;break-after:page}.tag:last-of-type{page-break-after:auto;break-after:auto}}
+</style></head><body><header><img src='logo.jpg' alt='Archive 22'><p>Place your order ♡</p></header><div class='tabs' id='tabs'></div><main id='app'></main><script>
+const SUPABASE_URL='https://hjilarpnhzydtyorrrpv.supabase.co';
+const SUPABASE_KEY='sb_publishable_frcN0Xmap5Q-34csTZsnuQ_-L0iveHC';
+
+const menu={
+'Coffee':[
+['V60','Hot / Iced'],['Americano ♡','Hot / Iced'],['Latte','Hot / Iced'],['Spanish Latte','Hot / Iced'],['Cappuccino','Hot only'],['Dirty Espresso','Iced only'],['Dirty Capp','Hot / Iced'],['Crème Macchiato','Iced only'],['Whimsy Latte','Iced only']],
+'Matcha':[['Classic Matcha','Hot / Iced'],['Strawberry Matcha','Iced only'],['Vanilla Matcha','Iced only'],['SMACKS CEREAL','Cereal Matcha / Cereal Latte · Iced']],
+'Açaí':[['Açaí Smoothie','Includes 2 toppings']],
+'Other':[['Karak','Hot only'],['Arabic Coffee','Hot only']],
+'Desserts':[['Burnt Basque','1 slice'],['Fruit Burnt Basque','1 slice'],['Nutella Burnt Basque','1 slice'],['Lotus Burnt Basque','1 slice'],['Tiramisu','1 slice'],['Kuwaiti Elba','1 slice'],['Qurs Aqaili','1 slice'],['Cookie Scoop','Nutella filled']]
+};
+const descriptions={
+'V60':'Hand-brewed filter coffee. Choose your temperature and beans.',
+'Americano ♡':'Our most loved. Espresso with water, served hot or iced.',
+'Latte':'Espresso with milk, smooth and creamy.',
+'Spanish Latte':'Espresso with a sweet, creamy milk base.',
+'Cappuccino':'Hot espresso with steamed and frothed milk.',
+'Dirty Espresso':'Signature espresso over vanilla foam.',
+'Dirty Capp':'Frothed cappuccino topped with sweetened foam and cocoa powder.',
+'Crème Macchiato':'Iced coffee topped with foam and cocoa powder.',
+'Whimsy Latte':'Iced vanilla latte with colored vanilla foam, sprinkles and a candle on the side.',
+'Classic Matcha':'Classic matcha with your choice of milk, hot or iced.',
+'Strawberry Matcha':'Iced matcha topped with strawberry foam.',
+'Vanilla Matcha':'Iced matcha topped with vanilla foam.',
+'SMACKS CEREAL':'A childhood favorite: cereal matcha or cereal latte with cereal-flavored milk, cereal foam and cereal.',
+'Açaí Smoothie':'Açaí smoothie with two toppings included.',
+'Karak':'Hot karak tea. Add saffron & cardamom if you like.',
+'Arabic Coffee':'Traditional Arabic coffee, served hot.',
+'Burnt Basque':'One slice of burnt Basque cheesecake.',
+'Fruit Burnt Basque':'One slice of fruit burnt Basque cheesecake.',
+'Nutella Burnt Basque':'One slice of Nutella burnt Basque cheesecake.',
+'Lotus Burnt Basque':'One slice of Lotus burnt Basque cheesecake.',
+'Tiramisu':'One slice of tiramisu.',
+'Kuwaiti Elba':'One slice of Kuwaiti elba.',
+'Qurs Aqaili':'One slice of qurs aqaili.',
+'Cookie Scoop':'Nutella-filled cookie scoop with your choice of ice cream.'
+};
+const beansStd=['Signature','Brazil','Ethiopia'];
+const extras=['Vanilla syrup +5','Caramel syrup +5','Date syrup +8','Cereal-flavored milk +8','Vanilla foam +5','Strawberry foam +5','Salted vanilla foam +8'];
+let cat='Coffee', current={}, customer='', basket=[];
+const app=document.getElementById('app'), tabsEl=document.getElementById('tabs');
+function showTabs(on=true){tabsEl.style.display=on?'flex':'none'}
+function tabs(){tabsEl.innerHTML=Object.keys(menu).map(c=>`<button class="tab ${c==cat?'on':''}" onclick="cat='${c}';tabs();home()">${c}</button>`).join('')}
+function startScreen(){showTabs(false);basket=[];customer='';app.innerHTML=`<div class="start"><div class="startbox"><button class="startbtn" onclick="nameScreen()">START NEW ORDER</button></div></div>`}
+function nameScreen(){showTabs(false);app.innerHTML=`<div class="start"><div class="startbox"><h2>Who's this order for?</h2><input id="orderName" class="name" placeholder="Name" autofocus><button class="startbtn" style="margin-top:12px" onclick="beginOrder()">CONTINUE</button></div></div>`}
+function beginOrder(){customer=(document.getElementById('orderName').value||'Guest').trim();showTabs(true);tabs();home()}
+function home(){current={};showTabs(true);app.innerHTML=`<div class="grid">${menu[cat].map(x=>`<button class="card" onclick='openItem(${JSON.stringify(x[0])})'>${x[0]}<small>${x[1]}</small></button>`).join('')}</div>${basket.length?`<div class="cartbar"><button class="viewbtn" onclick="viewBasket()">BASKET · ${basket.length}</button></div>`:''}`}
+function opts(title,arr,multi=false){return `<h3>${title}</h3>${arr.map(v=>`<button class="choice" data-group="${title}" data-multi="${multi}" onclick="pick(this,'${v.replaceAll("'","\\'")}')">${v}</button>`).join('')}`}
+function openItem(item){current={item,choices:[],cat};let s=`<button class="back" onclick="home()">← Back</button><div class="panel"><h2>${item}</h2><p class="desc">${descriptions[item]||''}</p>`;
+const tempItems=['V60','Americano ♡','Latte','Spanish Latte','Dirty Capp','Classic Matcha'];
+if(tempItems.includes(item)) s+=opts('Temperature',['Iced','Hot']);
+if(item==='SMACKS CEREAL') s+=opts('Choose',['Cereal Matcha','Cereal Latte']);
+if(item==='V60') s+=opts('Beans',['Signature','Rocky Road','Tiramisu','KitKat','Brazil','Ethiopia']);
+else if(item==='Americano ♡') s+=opts('Beans',['Signature (strong)','Italian Espresso Variety (strong)','Brazil','Ethiopia'])+opts('Shots',['One shot','Double shot','Extra shot']);
+else if(['Latte','Spanish Latte','Cappuccino','Whimsy Latte'].includes(item)) s+=opts('Beans',beansStd);
+if(['Latte','Spanish Latte','Cappuccino','Whimsy Latte','Classic Matcha','Strawberry Matcha','Vanilla Matcha'].includes(item)) s+=opts('Milk',['Whole milk','Oat milk +5','Coconut milk +5','Lactose-free milk']);
+if(item==='Açaí Smoothie') s+=opts('Toppings — choose 2',['Strawberry','Banana','Blueberry','Raspberry','Peanut butter +5'],true)+`<p class="note">Additional toppings +5 each.</p>`;
+if(item==='Karak') s+=opts('Add-on',['Saffron & Cardamom +5']);
+if(item==='Cookie Scoop') s+=opts('Ice cream',['Vanilla ice cream','Chocolate ice cream'])+opts('Add-on',['Marshmallow +5']);
+// Extras are hidden entirely for V60, Americano, Karak and Arabic Coffee.
+// For other temperature-selectable drinks, Extras disappear dynamically when Hot is selected.
+if(!['V60','Americano ♡','Karak','Arabic Coffee','Dirty Espresso','Dirty Capp','Crème Macchiato','Whimsy Latte','Strawberry Matcha','Vanilla Matcha','SMACKS CEREAL'].includes(item) && cat!=='Desserts' && item!=='Açaí Smoothie') s+=`<div id="extrasWrap">${opts('Extras',extras,true)}</div>`;
+s+=`<h3>Message</h3><textarea id="notes" rows="2" placeholder="Optional message"></textarea></div><div class="cartbar"><button class="viewbtn" onclick="viewBasket()">BASKET · ${basket.length}</button><button class="addbtn" onclick="addToBasket()">ADD TO ORDER</button></div>`;app.innerHTML=s;
+}
+function pick(el,v){let group=el.dataset.group,multi=el.dataset.multi==='true';if(!multi){document.querySelectorAll(`[data-group="${group}"]`).forEach(x=>x.classList.remove('sel'));current.choices=current.choices.filter(x=>x.group!==group)}el.classList.toggle('sel');if(el.classList.contains('sel'))current.choices.push({group,value:v});else current.choices=current.choices.filter(x=>!(x.group===group&&x.value===v));
+if(group==='Temperature'){const wrap=document.getElementById('extrasWrap');if(wrap){if(v==='Hot'&&el.classList.contains('sel')){wrap.style.display='none';current.choices=current.choices.filter(x=>x.group!=='Extras');wrap.querySelectorAll('.choice').forEach(x=>x.classList.remove('sel'))}else wrap.style.display='block'}}}
+function addToBasket(){current.notes=document.getElementById('notes')?.value||'';basket.push(JSON.parse(JSON.stringify(current)));home()}
+function removeItem(i){basket.splice(i,1);viewBasket()}
+function viewBasket(){showTabs(false);if(!basket.length){app.innerHTML=`<div class="panel"><h2>Your basket is empty</h2><div class="actions"><button onclick="showTabs(true);tabs();home()">Add items</button></div></div>`;return}
+app.innerHTML=`<button class="back" onclick="showTabs(true);tabs();home()">← Add more items</button><div class="panel"><h2>${customer}'s Order</h2><div class="basket">${basket.map((x,i)=>`<div class="basket-item"><div><b>${x.item}</b><small>${x.choices.map(c=>c.value).join(' · ')}${x.notes?` · ${x.notes}`:''}</small></div><button class="back" style="padding:8px" onclick="removeItem(${i})">Remove</button></div>`).join('')}</div><h3>Category number</h3><input id="carCategory" type="number" min="1" max="60" inputmode="numeric" placeholder="1–60"><h3>Car number</h3><input id="carNumber" inputmode="numeric" placeholder="Car number"></div><button class="place" onclick="finishOrder()">PLACE ORDER</button>`}
+function esc(x){return String(x).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+async function finishOrder(){
+let carCategory=(document.getElementById('carCategory').value||'').trim(),carNumber=(document.getElementById('carNumber').value||'').trim();
+let n=String(Number(localStorage.a22n||0)+1).padStart(4,'0');
+let time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+let total=basket.length;
+let orderItems=JSON.parse(JSON.stringify(basket));
+let payload={customer_name:customer,order_number:n,items:orderItems,category_number:carCategory?Number(carCategory):null,car_number:carNumber||null,status:'new'};
+let placeBtn=document.querySelector('.place');if(placeBtn){placeBtn.disabled=true;placeBtn.textContent='PLACING ORDER…'}
+try{
+let res=await fetch(`${SUPABASE_URL}/rest/v1/orders`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});
+if(!res.ok){let msg=await res.text();throw new Error(msg||`HTTP ${res.status}`)}
+localStorage.a22n=Number(n);
+let tags=orderItems.map((x,i)=>{let d=x.choices.map(c=>c.value).join(' · ');let car=[carCategory,carNumber].filter(Boolean).join(' · ');return `<div class="tag"><div class="top"><span>#${n}</span><span>${i+1} of ${total}</span></div><div class="person">${esc(customer)}</div><div class="details">Archive 22 ♡</div><div class="item">${esc(x.item)}</div><div class="details">${esc(d)}</div>${x.notes?`<div class="message">${esc(x.notes)}</div>`:''}<div class="bottom"><span>${esc(car||`${n}-22`)}</span><b>Archive 22</b><span>${time}</span></div></div>`}).join('');
+app.innerHTML=`<div class="panel"><h2 style="text-align:center">Order placed ♡</h2>${tags}<div class="actions"><button onclick="window.print()">Print / Save Tags</button><button onclick="startScreen()">New Order</button></div><p class="note">Each item has its own sticker under order #${n}.</p></div>`;basket=[];
+}catch(err){
+console.error(err);
+alert('Order could not be sent. Please check the connection and try again.');
+if(placeBtn){placeBtn.disabled=false;placeBtn.textContent='PLACE ORDER'}
+}}
+tabs();startScreen();
+</script></body></html>
