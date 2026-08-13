@@ -98,7 +98,11 @@ let payload={
 let placeBtn=document.querySelector('.place');if(placeBtn){placeBtn.disabled=true;placeBtn.textContent='PLACING ORDER…'}
 try{
 let res=await fetch(`${SUPABASE_URL}/rest/v1/orders`,{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}`,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(payload)});
-if(!res.ok){let msg=await res.text();throw new Error(msg||`HTTP ${res.status}`)}
+if(!res.ok){
+  let msg=await res.text();
+  alert("SUPABASE ERROR:\n" + res.status + "\n" + msg);
+  throw new Error(msg);
+}
 localStorage.a22n=Number(n);
 let tags=orderItems.map((x,i)=>{let d=x.choices.map(c=>c.value).join(' · ');let car=[carCategory,carNumber].filter(Boolean).join(' · ');return `<div class="tag"><div class="top"><span>#${n}</span><span>${i+1} of ${total}</span></div><div class="person">${esc(customer)}</div><div class="details">Archive 22 ♡</div><div class="item">${esc(x.item)}</div><div class="details">${esc(d)}</div>${x.notes?`<div class="message">${esc(x.notes)}</div>`:''}<div class="bottom"><span>${esc(car||`${n}-22`)}</span><b>Archive 22</b><span>${time}</span></div></div>`}).join('');
 app.innerHTML=`<div class="panel"><h2 style="text-align:center">Order placed ♡</h2>${tags}<div class="actions"><button onclick="window.print()">Print / Save Tags</button><button onclick="startScreen()">New Order</button></div><p class="note">Each item has its own sticker under order #${n}.</p></div>`;basket=[];
