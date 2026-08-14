@@ -1,0 +1,24 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Archive 22 Orders">
+<title>Archive 22 Orders</title>
+<style>
+:root{--wine:#9c1746;--cream:#fffaf4;--ink:#251d1c;--line:#eadfd6}*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:var(--cream);color:var(--ink)}
+main{max-width:760px;margin:auto;padding:24px 16px 100px}h1{text-align:center}.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;margin:12px 0}
+input,button{width:100%;font-size:16px;padding:14px;border-radius:14px;border:1px solid var(--line);margin:6px 0;background:#fff}
+.primary{background:var(--wine);color:#fff;border:0;font-weight:800}.order{cursor:pointer}.muted{color:#806f69;font-size:13px}
+.tag{width:50mm;height:50mm;background:#fff;color:#111;border:1px solid #bbb;border-radius:4mm;padding:4mm;margin:20px auto;font-family:Arial;display:flex;flex-direction:column}
+.top,.bottom{display:flex;justify-content:space-between;font-size:9px}.person{text-align:center;font-weight:800;font-size:20px;margin:8px 0 4px}.item{text-align:center;font-weight:800;font-size:13px;margin-top:10px}.details,.message{text-align:center;font-size:10px;line-height:1.35}.bottom{margin-top:auto}
+@media print{@page{size:50mm 50mm;margin:0}body{background:#fff}main>*:not(#tags){display:none!important}#tags{display:block!important}.tag{margin:0;border:0;border-radius:0;page-break-after:always;break-after:page}.tag:last-child{page-break-after:auto}}
+</style></head><body><main><h1>Archive 22 ♡</h1><div id="app"></div></main>
+<script>
+const U='https://hjilarpnhzydtyorrrpv.supabase.co',K='sb_publishable_frcN0Xmap5Q-34csTZsnuQ_-L0iveHC';
+const app=document.getElementById('app');
+function esc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function login(){app.innerHTML=`<div class="panel"><h2>Owner sign in</h2><input id="email" type="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button class="primary" onclick="signIn()">SIGN IN</button></div>`}
+async function signIn(){let email=document.getElementById('email').value,password=document.getElementById('password').value;let r=await fetch(U+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:K,'Content-Type':'application/json'},body:JSON.stringify({email,password})});let j=await r.json();if(!r.ok)return alert(j.error_description||j.msg||'Sign in failed');localStorage.a22token=j.access_token;loadOrders()}
+async function loadOrders(){let t=localStorage.a22token;if(!t)return login();let r=await fetch(U+'/rest/v1/orders?select=*&order=created_at.desc&limit=50',{headers:{apikey:K,Authorization:'Bearer '+t}});if(r.status===401){localStorage.removeItem('a22token');return login()}let rows=await r.json();if(!r.ok)return alert(JSON.stringify(rows));app.innerHTML=`<button onclick="loadOrders()">REFRESH</button>${rows.map(o=>`<div class="panel order" onclick='showOrder(${JSON.stringify(JSON.stringify(o))})'><b>#${esc(o.order_number)} · ${esc(o.customer_name)}</b><div class="muted">${(o.items||[]).length} item(s) · Category ${esc(o.category_number)} · Car ${esc(o.car_number)}</div></div>`).join('')}`}
+function showOrder(raw){let o=JSON.parse(raw),items=o.items||[],time=new Date(o.created_at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});let tags=items.map((x,i)=>{let d=(x.choices||[]).map(c=>c.value).join(' · '),car=[o.category_number,o.car_number].filter(Boolean).join(' · ');return `<div class="tag"><div class="top"><span>#${esc(o.order_number)}</span><span>${i+1} of ${items.length}</span></div><div class="person">${esc(o.customer_name)}</div><div class="details">Archive 22 ♡</div><div class="item">${esc(x.item)}</div><div class="details">${esc(d)}</div>${x.notes?`<div class="message">${esc(x.notes)}</div>`:''}<div class="bottom"><span>${esc(car)}</span><b>Archive 22</b><span>${esc(time)}</span></div></div>`}).join('');app.innerHTML=`<button onclick="loadOrders()">← ORDERS</button><div id="tags">${tags}</div><button class="primary" onclick="window.print()">PRINT TAGS</button>`}
+loadOrders();
+</script></body></html>
