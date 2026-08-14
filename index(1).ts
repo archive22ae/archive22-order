@@ -1,0 +1,5 @@
+import { createClient } from 'npm:@supabase/supabase-js@2'
+import webpush from 'npm:web-push@3.6.7'
+const url=Deno.env.get('SUPABASE_URL')!,service=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,pub=Deno.env.get('VAPID_PUBLIC_KEY')!,priv=Deno.env.get('VAPID_PRIVATE_KEY')!
+webpush.setVapidDetails('mailto:archive22@example.com',pub,priv)
+Deno.serve(async(req)=>{try{const payload=await req.json(),o=payload.record??payload,s=createClient(url,service);const {data,error}=await s.from('push_subscriptions').select('endpoint,p256dh,auth');if(error)throw error;const count=Array.isArray(o.items)?o.items.length:0;const msg=JSON.stringify({title:'Archive 22 ♡',body:`New order #${o.order_number} · ${o.customer_name} · ${count} item${count===1?'':'s'}`,tag:`order-${o.id}`,url:'./receiver.html'});const results=await Promise.allSettled((data||[]).map(x=>webpush.sendNotification({endpoint:x.endpoint,keys:{p256dh:x.p256dh,auth:x.auth}},msg)));return Response.json({ok:true,sent:results.filter(x=>x.status==='fulfilled').length,total:results.length})}catch(e){console.error(e);return Response.json({ok:false,error:String(e)},{status:500})}})
